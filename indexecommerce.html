@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FerrePro - Tu Ferretería Online</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="contact-info">
+                    <a href="tel:+56912345678">
+                        <i class="fas fa-phone"></i>
+                        <span>+56 9 1234 5678</span>
+                    </a>
+                    <a href="mailto:contacto@ferrepro.cl">
+                        <i class="fas fa-envelope"></i>
+                        <span>contacto@ferrepro.cl</span>
+                    </a>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="container">
+                <div class="logo">
+                    <img src="https://incotexhv.cl/wp-content/uploads/2021/07/Logo-Incotex-1024x318.png" alt="FerrePro Logo">
+                </div>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <select class="category-select">
+                            <option value="">Todas las categorías</option>
+                            <option value="herramientas">Herramientas</option>
+                            <option value="electricidad">Electricidad</option>
+                            <option value="plomeria">Plomería</option>
+                        </select>
+                        <input type="text" placeholder="¿Qué estás buscando?">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+                <div class="nav-actions">
+                    <a href="#" class="nav-action-btn">
+                        <i class="fas fa-user"></i>
+                        <span>Mi Cuenta</span>
+                    </a>
+                    <a href="#" class="nav-action-btn cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Carrito</span>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mega Menu -->
+        <div class="mega-menu">
+            <div class="container">
+                <div class="categories-dropdown">
+                    <button class="categories-toggle">
+                        <i class="fas fa-bars"></i>
+                        Categorías
+                    </button>
+                    <div class="categories-content">
+                        <ul>
+                            <li>
+                                <a href="#"><i class="fas fa-tools"></i>Herramientas</a>
+                                <div class="submenu">
+                                    <div class="submenu-content">
+                                        <h4>Herramientas</h4>
+                                        <ul>
+                                            <li><a href="#">Herramientas Eléctricas</a></li>
+                                            <li><a href="#">Herramientas Manuales</a></li>
+                                            <li><a href="#">Herramientas de Medición</a></li>
+                                            <li><a href="#">Herramientas de Jardín</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fas fa-bolt"></i>Electricidad</a>
+                                <div class="submenu">
+                                    <div class="submenu-content">
+                                        <h4>Electricidad</h4>
+                                        <ul>
+                                            <li><a href="#">Cables y Conductores</a></li>
+                                            <li><a href="#">Iluminación</a></li>
+                                            <li><a href="#">Enchufes y Interruptores</a></li>
+                                            <li><a href="#">Tableros Eléctricos</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Más categorías aquí -->
+                        </ul>
+                    </div>
+                </div>
+                <ul class="main-menu">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Ofertas</a></li>
+                    <li><a href="#">Novedades</a></li>
+                    <li><a href="#">Marcas</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="main-banner">
+                    <div class="swiper hero-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="hero-content">
+                                    <h1>Herramientas Profesionales</h1>
+                                    <p>Las mejores marcas con hasta 40% de descuento</p>
+                                    <a href="#" class="cta-button">Ver Ofertas</a>
+                                </div>
+                                <img src="https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg" alt="Herramientas">
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+                <div class="promo-banners">
+                    <div class="promo-banner">
+                        <img src="https://images.pexels.com/photos/4483610/pexels-photo-4483610.jpeg" alt="Promo 1">
+                        <div class="promo-content">
+                            <h3>Herramientas Eléctricas</h3>
+                            <p>Desde $29.990</p>
+                        </div>
+                    </div>
+                    <div class="promo-banner">
+                        <img src="https://images.pexels.com/photos/4483775/pexels-photo-4483775.jpeg" alt="Promo 2">
+                        <div class="promo-content">
+                            <h3>Jardín y Exterior</h3>
+                            <p>Hasta 30% dcto</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Envío Gratis</h3>
+                    <p>En compras sobre $50.000</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Compra Segura</h3>
+                    <p>Pago 100% seguro</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-medal"></i>
+                    <h3>Garantía</h3>
+                    <p>30 días de garantía</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>Soporte 24/7</h3>
+                    <p>Atención personalizada</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Categorías Populares</h2>
+                <p>Encuentra todo lo que necesitas para tu proyecto</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <img src="https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg" alt="Herramientas">
+                    <div class="category-content">
+                        <h3>Herramientas</h3>
+                        <a href="#" class="category-link">Ver productos</a>
+                    </div>
+                </div>
+                <!-- Repite category-card para más categorías -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Productos Destacados</h2>
+                <p>Los productos más vendidos de la semana</p>
+            </div>
+            <div class="products-grid">
+                <!-- Product Card Original -->
+                <div class="product-card">
+                    <div class="product-badge">-15%</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Taladro Percutor Inalámbrico</h3>
+                        <div class="product-price">
+                            <span class="original-price">$89.990</span>
+                            <span class="final-price">$76.490</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(4.5)</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Nuevo Producto 1 -->
+                <div class="product-card">
+                    <div class="product-badge">-20%</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Set de Llaves Combinadas 14 Piezas</h3>
+                        <div class="product-price">
+                            <span class="original-price">$45.990</span>
+                            <span class="final-price">$36.790</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Nuevo Producto 2 -->
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/1409221/pexels-photo-1409221.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Compresor de Aire 50L</h3>
+                        <div class="product-price">
+                            <span class="final-price">$159.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>(4.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Nuevo Producto 3 -->
+                <div class="product-card">
+                    <div class="product-badge">Hot</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/4483610/pexels-photo-4483610.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Amoladora Angular 4 1/2"</h3>
+                        <div class="product-price">
+                            <span class="original-price">$49.990</span>
+                            <span class="final-price">$39.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(4.5)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Hot</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/4483610/pexels-photo-4483610.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Amoladora Angular 4 1/2"</h3>
+                        <div class="product-price">
+                            <span class="original-price">$49.990</span>
+                            <span class="final-price">$39.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(4.5)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn prev disabled">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <!-- Explore Button -->
+            <div class="explore-more">
+                <a href="#" class="explore-btn">
+                    Explorar productos
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Products -->
+    <section class="recent-products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Productos Recientes</h2>
+                <p>Las últimas novedades en nuestra tienda</p>
+            </div>
+            <div class="products-grid">
+                <!-- Product Card -->
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sierra Circular Inalámbrica</h3>
+                        <div class="product-price">
+                            <span class="final-price">$129.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sierra Circular Inalámbrica</h3>
+                        <div class="product-price">
+                            <span class="final-price">$129.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sierra Circular Inalámbrica</h3>
+                        <div class="product-price">
+                            <span class="final-price">$129.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sierra Circular Inalámbrica</h3>
+                        <div class="product-price">
+                            <span class="final-price">$129.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sierra Circular Inalámbrica</h3>
+                        <div class="product-price">
+                            <span class="final-price">$129.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sierra Circular Inalámbrica</h3>
+                        <div class="product-price">
+                            <span class="final-price">$129.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <img src="https://images.pexels.com/photos/8005397/pexels-photo-8005397.jpeg" alt="Producto">
+                        <div class="product-actions">
+                            <button class="action-btn"><i class="fas fa-heart"></i></button>
+                            <button class="action-btn add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <button class="action-btn"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Sierra Circular Inalámbrica</h3>
+                        <div class="product-price">
+                            <span class="final-price">$129.990</span>
+                        </div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(5.0)</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Repite product-card para más productos -->
+            </div>
+            <!-- View All Button -->
+            <div class="view-all">
+                <a href="#" class="view-all-btn">
+                    Ver todos los productos nuevos
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nuestras Marcas</h2>
+                <p>Trabajamos con las mejores marcas del mercado</p>
+            </div>
+            <div class="swiper brands-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="brand-card">
+                            <img src="https://1000marcas.net/wp-content/uploads/2020/02/Google-Logo.png" alt="Stanley">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-card">
+                            <img src="https://1000marcas.net/wp-content/uploads/2020/02/Google-Logo.png" alt="Bosch">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-card">
+                            <img src="https://1000marcas.net/wp-content/uploads/2020/02/Google-Logo.png" alt="Milwaukee">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-card">
+                            <img src="https://1000marcas.net/wp-content/uploads/2020/02/Google-Logo.png" alt="Milwaukee">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-card">
+                            <img src="https://1000marcas.net/wp-content/uploads/2020/02/Google-Logo.png" alt="Milwaukee">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="brand-card">
+                            <img src="https://1000marcas.net/wp-content/uploads/2020/02/Google-Logo.png" alt="Milwaukee">
+                        </div>
+                    </div>
+                    <!-- Agrega más marcas según necesites -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <h4>Sobre Nosotros</h4>
+                    <p>FerrePro es tu ferretería online de confianza. Encuentra todo lo que necesitas para tus proyectos.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-widget">
+                    <h4>Enlaces Útiles</h4>
+                    <ul>
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Devoluciones</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h4>Contacto</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-phone"></i> +56 9 1234 5678</li>
+                        <li><i class="fas fa-envelope"></i> contacto@ferrepro.cl</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Av. Principal 123, Santiago</li>
+                        <li><i class="fas fa-clock"></i> Lun - Vie: 9:00 - 18:30</li>
+                    </ul>
+                </div>
+                <div class="footer-widget newsletter">
+                    <h4>Newsletter</h4>
+                    <p>Suscríbete para recibir ofertas exclusivas y novedades directamente en tu correo.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Ingresa tu correo electrónico" required>
+                        <button type="submit">
+                            Suscribirse
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="payment-methods">
+                    <img src="path/to/visa.png" alt="Visa">
+                    <img src="path/to/mastercard.png" alt="Mastercard">
+                    <img src="path/to/webpay.png" alt="WebPay">
+                </div>
+                <p>&copy; 2024 FerrePro - Todos los derechos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
