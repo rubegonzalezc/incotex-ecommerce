@@ -78,8 +78,287 @@ async getProductById(productId) {
       console.error(`Error fetching product with ID ${productId}:`, error);
       throw error;
     }
+},
+async createProduct(productData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/products`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      },
+      body: JSON.stringify(productData)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to create product');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating product:', error);
+    throw error;
+  }
+},
+
+async updateProduct(productId, productData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/products/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      },
+      body: JSON.stringify(productData)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to update product');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Error updating product with ID ${productId}:`, error);
+    throw error;
+  }
+},
+
+async deleteProduct(productId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/products/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to delete product');
+    }
+    
+    return true;
+  } catch (error) {
+    console.error(`Error deleting product with ID ${productId}:`, error);
+    throw error;
+  }
+},
+
+// Admin methods for category management
+async getCategories() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/categories`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    throw error;
+  }
+},
+
+async createCategory(categoryData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/categories`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      },
+      body: JSON.stringify(categoryData)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to create category');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error creating category:', error);
+    throw error;
+  }
+},
+
+async updateCategory(categoryId, categoryData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/categories/${categoryId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      },
+      body: JSON.stringify(categoryData)
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to update category');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error(`Error updating category with ID ${categoryId}:`, error);
+    throw error;
+  }
+},
+
+async deleteCategory(categoryId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/categories/${categoryId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to delete category');
+    }
+    
+    return true;
+  } catch (error) {
+    console.error(`Error deleting category with ID ${categoryId}:`, error);
+    throw error;
+  }
+},
+
+// Admin methods for review management
+async getReviews(productId = null) {
+  try {
+    let url = `${API_BASE_URL}/admin/reviews`;
+    if (productId) {
+      url += `?productId=${productId}`;
+    }
+    
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch reviews');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    throw error;
+  }
+},
+
+async deleteReview(reviewId) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/reviews/${reviewId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to delete review');
+    }
+    
+    return true;
+  } catch (error) {
+    console.error(`Error deleting review with ID ${reviewId}:`, error);
+    throw error;
+  }
+},
+// Añadir este método al objeto productService
+
+async getDiscountedProducts(params = {}) {
+  try {
+    // En un entorno real, aquí se llamaría a la API con los filtros
+    // Por ahora, simulamos una respuesta
+    
+    // Simular tiempo de respuesta
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Generar productos de ejemplo con descuento
+    const discountedProducts = Array.from({ length: 30 }, (_, i) => ({
+      id: i + 1,
+      name: `Producto en oferta ${i + 1}`,
+      price: Math.floor(Math.random() * 50000) + 10000,
+      originalPrice: Math.floor(Math.random() * 100000) + 60000,
+      image: `https://picsum.photos/id/${(i % 10) + 20}/500/500`,
+      rating: (Math.random() * 2 + 3).toFixed(1),
+      reviewCount: Math.floor(Math.random() * 100),
+      badge: `-${Math.floor(Math.random() * 30) + 10}%`,
+      badgeType: 'discount',
+      inStock: true,
+      description: 'Producto con descuento especial por tiempo limitado.',
+      category: Math.floor(Math.random() * 5) + 1,
+      brand: Math.floor(Math.random() * 6) + 1,
+    }));
+    
+    // Aplicar filtros
+    let filteredProducts = [...discountedProducts];
+    
+    // Filtrar por categoría
+    if (params.category) {
+      filteredProducts = filteredProducts.filter(p => p.category === params.category);
+    }
+    
+    // Filtrar por marca
+    if (params.brand && params.brand.length) {
+      filteredProducts = filteredProducts.filter(p => params.brand.includes(p.brand));
+    }
+    
+    // Filtrar por precio
+    if (params.price) {
+      filteredProducts = filteredProducts.filter(
+        p => p.price >= params.price[0] && p.price <= params.price[1]
+      );
+    }
+    
+    // Ordenar productos
+    if (params.sort) {
+      switch (params.sort) {
+        case 'price_asc':
+          filteredProducts.sort((a, b) => a.price - b.price);
+          break;
+        case 'price_desc':
+          filteredProducts.sort((a, b) => b.price - a.price);
+          break;
+        case 'discount_desc':
+          filteredProducts.sort((a, b) => {
+            const discountA = ((a.originalPrice - a.price) / a.originalPrice) * 100;
+            const discountB = ((b.originalPrice - b.price) / b.originalPrice) * 100;
+            return discountB - discountA;
+          });
+          break;
+        case 'newest':
+          // Simulamos que los IDs más altos son los más recientes
+          filteredProducts.sort((a, b) => b.id - a.id);
+          break;
+        case 'popularity_desc':
+          filteredProducts.sort((a, b) => b.reviewCount - a.reviewCount);
+          break;
+      }
+    }
+    
+    // Paginación
+    const page = params.page || 1;
+    const limit = params.limit || 12;
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+    
+    return {
+      data: paginatedProducts,
+      total: filteredProducts.length,
+      totalPages: Math.ceil(filteredProducts.length / limit),
+      page: page,
+      limit: limit
+    };
+  } catch (error) {
+    console.error('Error in getDiscountedProducts:', error);
+    throw error;
+  }
 }
 }
+
 
 /* Expected API response format for product details:
 {
@@ -171,3 +450,7 @@ Para este diseño, recomiendo las siguientes dimensiones para las imágenes de p
 - Resolución : 72-96 DPI
 - Tamaño máximo : 200KB
 */
+
+
+// Admin methods for product management
+

@@ -1,107 +1,245 @@
 const API_BASE_URL = 'your-api-base-url';
 
 export const userService = {
-  async getUserProfile() {
+  // Admin login
+  async adminLogin(credentials) {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/profile`, {
+      const response = await fetch(`${API_BASE_URL}/admin/login`, {
+        method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(credentials)
       });
       
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Login failed');
       }
       
-      return await response.json();
+      const data = await response.json();
+      localStorage.setItem('admin_token', data.token);
+      return data;
     } catch (error) {
-      console.error('Error fetching user profile:', error);
+      console.error('Error during admin login:', error);
       throw error;
     }
   },
   
-  async updateUserProfile(profileData) {
+  // Admin logout
+  adminLogout() {
+    localStorage.removeItem('admin_token');
+    return true;
+  },
+  
+  // Check if admin is logged in
+  isAdminLoggedIn() {
+    return !!localStorage.getItem('admin_token');
+  },
+  
+  // Get all users (admin only)
+  async getUsers() {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/profile`, {
+      const response = await fetch(`${API_BASE_URL}/admin/users`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch users');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      throw error;
+    }
+  },
+  
+  // Get user by ID (admin only)
+  async getUserById(userId) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch user');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error(`Error fetching user with ID ${userId}:`, error);
+      throw error;
+    }
+  },
+  
+  // Update user (admin only)
+  async updateUser(userId, userData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
         },
-        body: JSON.stringify(profileData)
+        body: JSON.stringify(userData)
       });
       
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Failed to update user');
       }
       
       return await response.json();
     } catch (error) {
-      console.error('Error updating user profile:', error);
+      console.error(`Error updating user with ID ${userId}:`, error);
       throw error;
     }
   },
   
-  async changePassword(passwordData) {
+  // Delete user (admin only)
+  async deleteUser(userId) {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/change-password`, {
+      const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete user');
+      }
+      
+      return true;
+    } catch (error) {
+      console.error(`Error deleting user with ID ${userId}:`, error);
+      throw error;
+    }
+  },
+  // Admin login
+  async adminLogin(credentials) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/login`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(passwordData)
+        body: JSON.stringify(credentials)
       });
       
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Login failed');
       }
       
-      return await response.json();
+      const data = await response.json();
+      localStorage.setItem('admin_token', data.token);
+      return data;
     } catch (error) {
-      console.error('Error changing password:', error);
+      console.error('Error during admin login:', error);
       throw error;
     }
   },
   
-  async getUserOrders() {
+  // Admin logout
+  adminLogout() {
+    localStorage.removeItem('admin_token');
+    return true;
+  },
+  
+  // Check if admin is logged in
+  isAdminLoggedIn() {
+    return !!localStorage.getItem('admin_token');
+  },
+  
+  // Get all users (admin only)
+  async getUsers() {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/orders`, {
+      const response = await fetch(`${API_BASE_URL}/admin/users`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
         }
       });
       
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Failed to fetch users');
       }
       
       return await response.json();
     } catch (error) {
-      console.error('Error fetching user orders:', error);
+      console.error('Error fetching users:', error);
       throw error;
     }
   },
   
-  async getOrderDetails(orderId) {
+  // Get user by ID (admin only)
+  async getUserById(userId) {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/orders/${orderId}`, {
+      const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
         }
       });
       
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Failed to fetch user');
       }
       
       return await response.json();
     } catch (error) {
-      console.error(`Error fetching order details for order ${orderId}:`, error);
+      console.error(`Error fetching user with ID ${userId}:`, error);
+      throw error;
+    }
+  },
+  
+  // Update user (admin only)
+  async updateUser(userId, userData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        },
+        body: JSON.stringify(userData)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update user');
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error(`Error updating user with ID ${userId}:`, error);
+      throw error;
+    }
+  },
+  
+  // Delete user (admin only)
+  async deleteUser(userId) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete user');
+      }
+      
+      return true;
+    } catch (error) {
+      console.error(`Error deleting user with ID ${userId}:`, error);
       throw error;
     }
   }
 };
+
+
 
 /* Expected API response format for user profile:
 {
