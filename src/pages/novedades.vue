@@ -1,5 +1,5 @@
 <template>
-  <div class="offers-page">
+  <div class="novedades-page">
     <v-container class="py-8">
       <!-- Breadcrumbs -->
       <v-breadcrumbs :items="breadcrumbs" class="px-0 py-2 mb-4">
@@ -10,22 +10,22 @@
 
       <!-- Título de la página -->
       <div class="text-center mb-8">
-        <h1 class="text-h3 font-weight-bold mb-2">Ofertas Especiales</h1>
-        <p class="text-subtitle-1">Descubre nuestros mejores productos con descuentos increíbles</p>
+        <h1 class="text-h3 font-weight-bold mb-2">Novedades</h1>
+        <p class="text-subtitle-1">Descubre los productos más recientes en nuestra tienda</p>
       </div>
 
-      <!-- Banner de ofertas -->
+      <!-- Banner de novedades -->
       <v-card class="mb-8 rounded-lg overflow-hidden">
         <v-img
-          src="https://via.placeholder.com/1200x300?text=Ofertas+Especiales"
+          src="https://via.placeholder.com/1200x300?text=Nuevos+Productos"
           height="300"
           cover
           class="bg-primary"
         >
           <div class="d-flex flex-column justify-center align-center fill-height">
             <div class="text-white text-center px-4">
-              <h2 class="text-h4 font-weight-bold mb-2">¡HASTA 50% DE DESCUENTO!</h2>
-              <p class="text-subtitle-1 mb-4">Ofertas por tiempo limitado. ¡No te las pierdas!</p>
+              <h2 class="text-h4 font-weight-bold mb-2">¡DESCUBRE LO ÚLTIMO!</h2>
+              <p class="text-subtitle-1 mb-4">Los productos más nuevos y tendencias del mercado</p>
               <v-btn
                 color="white"
                 variant="outlined"
@@ -33,7 +33,7 @@
                 class="text-primary"
                 @click="scrollToProducts"
               >
-                Ver ofertas
+                Ver novedades
               </v-btn>
             </div>
           </div>
@@ -51,7 +51,7 @@
           class="mb-4 d-md-none"
           @click="mobileFilterOpen = true"
         >
-          Filtrar Ofertas
+          Filtrar Novedades
         </v-btn>
         
         <v-row>
@@ -127,7 +127,7 @@
                   Marcas
                 </h3>
                 
-                <v-list density="compact" class="pa-0 bg-transparent brand-list-container">
+                <v-list density="compact" class="pa-0 bg-transparent">
                   <v-list-item
                     v-for="brand in brands"
                     :key="brand.id"
@@ -165,7 +165,6 @@
                   thumb-label="always"
                   hide-details
                   class="mt-6"
-                  @end="applyFilters"
                 >
                   <template v-slot:thumb-label="{ modelValue }">
                     ${{ formatPrice(modelValue) }}
@@ -176,6 +175,18 @@
                   <v-chip size="small" color="grey-lighten-3">${{ formatPrice(filters.price[0]) }}</v-chip>
                   <v-chip size="small" color="grey-lighten-3">${{ formatPrice(filters.price[1]) }}</v-chip>
                 </div>
+              </div>
+              
+              <!-- Botón para aplicar filtros en desktop -->
+              <div class="px-4 py-3 bg-white d-flex justify-end">
+                <v-btn
+                  color="primary"
+                  variant="elevated"
+                  prepend-icon="fa-solid fa-check"
+                  @click="applyFilters"
+                >
+                  Aplicar filtros
+                </v-btn>
               </div>
             </v-card>
           </v-col>
@@ -244,7 +255,7 @@
                     <div
                       v-if="product.badge"
                       class="product-badge"
-                      :class="`badge-${product.badgeType || 'discount'}`"
+                      :class="`badge-${product.badgeType || 'new'}`"
                     >
                       {{ product.badge }}
                     </div>
@@ -275,17 +286,6 @@
                       >
                         ${{ formatPrice(product.originalPrice) }}
                       </span>
-                      
-                      <v-spacer></v-spacer>
-                      
-                      <v-chip
-                        v-if="calculateDiscount(product.price, product.originalPrice) > 0"
-                        color="error"
-                        size="small"
-                        class="font-weight-bold"
-                      >
-                        -{{ calculateDiscount(product.price, product.originalPrice) }}%
-                      </v-chip>
                     </div>
                   </v-card-text>
                   
@@ -396,7 +396,7 @@
               Marcas
             </h3>
             
-            <v-list density="compact" class="pa-0 bg-transparent brand-list-container">
+            <v-list density="compact" class="pa-0 bg-transparent">
               <v-list-item
                 v-for="brand in brands"
                 :key="brand.id"
@@ -510,7 +510,7 @@ const breadcrumbs = [
     to: '/',
   },
   {
-    title: 'Ofertas',
+    title: 'Novedades',
     disabled: true,
   },
 ];
@@ -537,16 +537,17 @@ const filters = reactive({
   category: null,
   brand: [],
   price: [0, 500000],
-  sort: 'discount_desc',
+  sort: 'newest',
 });
 
 // Opciones de ordenamiento
 const sortOptions = [
-  { title: 'Mayor descuento', value: 'discount_desc' },
+  { title: 'Más recientes', value: 'newest' },
   { title: 'Menor precio', value: 'price_asc' },
   { title: 'Mayor precio', value: 'price_desc' },
   { title: 'Más populares', value: 'popularity_desc' },
-  { title: 'Más recientes', value: 'newest' },
+  { title: 'A-Z', value: 'name_asc' },
+  { title: 'Z-A', value: 'name_desc' },
 ];
 
 // Snackbar para mensajes
@@ -563,7 +564,7 @@ const hasActiveFilters = computed(() => {
          filters.brand.length > 0 || 
          filters.price[0] !== priceRange.min || 
          filters.price[1] !== priceRange.max ||
-         filters.sort !== 'discount_desc';
+         filters.sort !== 'newest';
 });
 
 // Cargar datos iniciales
@@ -583,9 +584,17 @@ onMounted(async () => {
 // Método para obtener productos
 const fetchProducts = async () => {
   loading.value = true;
+  console.log('Aplicando filtros:', {
+    page: currentPage.value,
+    limit: 12,
+    sort: filters.sort,
+    category: filters.category,
+    brand: filters.brand,
+    price: filters.price
+  });
   
   try {
-    const response = await productService.getDiscountedProducts({
+    const response = await productService.getNewProducts({
       page: currentPage.value,
       limit: 12,
       sort: filters.sort,
@@ -594,6 +603,7 @@ const fetchProducts = async () => {
       price: filters.price,
     });
     
+    console.log('Productos recibidos:', response);
     products.value = response.products;
     totalProducts.value = response.total;
     totalPages.value = response.totalPages;
@@ -640,7 +650,7 @@ const resetFilters = () => {
   filters.category = null;
   filters.brand = [];
   filters.price = [priceRange.min, priceRange.max];
-  filters.sort = 'discount_desc';
+  filters.sort = 'newest';
   currentPage.value = 1;
   
   if (mobileFilterOpen.value) {
@@ -664,7 +674,7 @@ const handlePageChange = (page) => {
 // Método para alternar filtro de categoría
 const toggleCategoryFilter = (categoryId) => {
   filters.category = categoryId;
-  applyFilters();
+  applyFilters(); // Ahora aplicamos los filtros inmediatamente
 };
 
 // Método para alternar filtro de marca
@@ -675,19 +685,12 @@ const toggleBrandFilter = (brandId) => {
   } else {
     filters.brand.splice(index, 1);
   }
-  applyFilters();
+  applyFilters(); // Ahora aplicamos los filtros inmediatamente
 };
 
 // Método para formatear precio
 const formatPrice = (price) => {
   return new Intl.NumberFormat('es-CL').format(Math.round(price));
-};
-
-// Método para calcular porcentaje de descuento
-const calculateDiscount = (currentPrice, originalPrice) => {
-  if (!originalPrice || originalPrice <= currentPrice) return 0;
-  const discount = ((originalPrice - currentPrice) / originalPrice) * 100;
-  return Math.round(discount);
 };
 
 // Método para agregar al carrito
@@ -719,7 +722,7 @@ const scrollToProducts = () => {
 </script>
 
 <style scoped>
-.offers-page {
+.novedades-page {
   background-color: #f8f9fa;
   min-height: 100vh;
 }
@@ -824,4 +827,4 @@ const scrollToProducts = () => {
     font-size: 1.2rem !important;
   }
 }
-</style>
+</style> 

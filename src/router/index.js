@@ -37,6 +37,11 @@ const routes = [
         name: 'ofertas',
         component: () => import('@/pages/ofertas.vue')
       },
+      {
+        path: 'novedades',
+        name: 'novedades',
+        component: () => import('@/pages/novedades.vue')
+      },
       // Nuevas rutas públicas
       {
         path: 'mi-cuenta',

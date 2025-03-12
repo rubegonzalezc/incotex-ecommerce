@@ -28,18 +28,18 @@ export default createVuetify({
   defaults: {
     VRadio: {
       color: 'primary',
-      density: 'comfortable',
+      density: 'default',
       ripple: true,
       baseColor: 'rgba(0, 0, 0, 0.87)',
-    },
-    VRadioGroup: {
-      color: 'primary',
-      density: 'comfortable',
-      baseColor: 'rgba(0, 0, 0, 0.87)',
+      hideDetails: false,
+      trueIcon: '$faCircleDot',
+      falseIcon: '$faCircle',
     },
     VCheckbox: {
       color: 'primary',
       baseColor: 'rgba(0, 0, 0, 0.87)',
+      density: 'default', // Añadido para consistencia
+      hideDetails: false, // Añadido para mostrar detalles
     },
     VTextField: {
       color: 'primary',

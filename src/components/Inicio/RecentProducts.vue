@@ -67,7 +67,7 @@
       <v-btn
         color="primary"
         variant="outlined"
-        :to="'/productos/nuevos'"
+        :to="'/novedades'"
         class="px-6"
       >
         Ver todos los productos nuevos <v-icon icon="fa-solid fa-arrow-right" size="small" class="ml-2"></v-icon>
