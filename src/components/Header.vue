@@ -54,7 +54,7 @@
           </router-link>
         </div>
 
-        <!-- Cart icon -->
+        <!-- Quote icon -->
         <div class="d-flex align-center">
           <v-btn
             icon
@@ -70,10 +70,10 @@
             icon
             variant="text"
             color="primary"
-            to="/carrito"
+            to="/cotizacion"
           >
-            <v-badge :content="cartItemCount.toString()" color="error" location="top end" offset-x="5" offset-y="5">
-              <v-icon icon="fa-solid fa-shopping-cart" />
+            <v-badge :content="quoteItemCount.toString()" color="primary" location="top end" offset-x="5" offset-y="5">
+              <v-icon icon="fa-solid fa-file-invoice" />
             </v-badge>
           </v-btn>
         </div>
@@ -135,11 +135,11 @@
           <v-list-item-title>Mi Cuenta</v-list-item-title>
         </v-list-item>
         
-        <v-list-item to="/carrito" @click="mobileDrawer = false">
+        <v-list-item to="/cotizacion" @click="mobileDrawer = false">
           <template v-slot:prepend>
-            <v-icon icon="fa-solid fa-shopping-cart" class="mr-2" />
+            <v-icon icon="fa-solid fa-file-invoice" class="mr-2" />
           </template>
-          <v-list-item-title>Carrito</v-list-item-title>
+          <v-list-item-title>Mi Cotización</v-list-item-title>
         </v-list-item>
         
         <v-divider class="my-2"></v-divider>
@@ -220,7 +220,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <!-- Main Navigation - Logo, búsqueda y cuenta/carrito (se oculta en móviles) -->
+    <!-- Main Navigation - Logo, búsqueda y cuenta/cotización (se oculta en móviles) -->
     <v-sheet color="white" elevation="0" class="py-3 d-none d-md-block">
       <div class="container d-flex align-center">
         <div class="logo mr-6">
@@ -265,9 +265,9 @@
             <span class="text-caption">Mi Cuenta</span>
           </v-btn>
           
-          <!-- Cart with dropdown -->
+          <!-- Quote dropdown -->
           <v-menu
-            v-model="cartMenuOpen"
+            v-model="quoteMenuOpen"
             :close-on-content-click="false"
             location="bottom end"
             offset="10"
@@ -277,29 +277,29 @@
               <v-btn 
                 v-bind="props"
                 variant="text" 
-                class="cart-btn d-flex flex-column pa-2 ml-4" 
+                class="quote-btn d-flex flex-column pa-2 ml-4" 
                 color="black"
               >
-                <v-badge :content="cartItemCount.toString()" color="error" location="top end" offset-x="10" offset-y="10">
-                  <v-icon icon="fa-solid fa-shopping-cart" class="mb-1" />
+                <v-badge :content="quoteItemCount.toString()" color="primary" location="top end" offset-x="10" offset-y="10">
+                  <v-icon icon="fa-solid fa-file-invoice" class="mb-1" />
                 </v-badge>
-                <span class="text-caption">Carrito</span>
+                <span class="text-caption">Cotización</span>
               </v-btn>
             </template>
 
-            <v-card class="cart-dropdown">
+            <v-card class="quote-dropdown">
               <v-card-title class="d-flex justify-space-between align-center py-3 px-4 bg-grey-lighten-4">
-                <span class="text-subtitle-1 font-weight-bold">Mi Carrito</span>
-                <span class="text-subtitle-2">{{ cartItemCount }} productos</span>
+                <span class="text-subtitle-1 font-weight-bold">Mi Cotización</span>
+                <span class="text-subtitle-2">{{ quoteItemCount }} productos</span>
               </v-card-title>
 
               <v-card-text class="pa-0">
-                <div v-if="cartItems.length > 0">
-                  <v-list class="cart-items-list">
+                <div v-if="quoteItems.length > 0">
+                  <v-list class="quote-items-list">
                     <v-list-item
-                      v-for="item in cartItems"
+                      v-for="item in quoteItems"
                       :key="item.id"
-                      class="cart-item py-2"
+                      class="quote-item py-2"
                     >
                       <template v-slot:prepend>
                         <v-img
@@ -317,8 +317,8 @@
                       </v-list-item-title>
 
                       <v-list-item-subtitle class="d-flex justify-space-between align-center">
-                        <span class="text-caption">{{ item.quantity }} x ${{ formatPrice(item.price) }}</span>
-                        <span class="text-body-2 font-weight-bold">${{ formatPrice(item.price * item.quantity) }}</span>
+                        <span class="text-caption">Cantidad: {{ item.quantity }}</span>
+                        <span class="text-caption">SKU: {{ item.sku }}</span>
                       </v-list-item-subtitle>
 
                       <template v-slot:append>
@@ -327,7 +327,7 @@
                           variant="text"
                           density="compact"
                           color="grey"
-                          @click="removeFromCart(item.id)"
+                          @click="removeFromQuote(item.id)"
                         >
                           <v-icon icon="fa-solid fa-times" size="small"></v-icon>
                         </v-btn>
@@ -337,45 +337,41 @@
 
                   <v-divider></v-divider>
 
-                  <div class="cart-summary pa-4">
-                    <div class="d-flex justify-space-between mb-2">
-                      <span class="text-body-2">Subtotal:</span>
-                      <span class="text-body-2 font-weight-bold">${{ formatPrice(cartSubtotal) }}</span>
-                    </div>
-
-                    <div class="d-flex flex-column mt-4">
+                  <div class="quote-actions pa-4">
+                    <div class="d-flex flex-column">
                       <v-btn
                         color="primary"
                         variant="flat"
                         block
                         class="mb-2"
-                        to="/carrito"
-                        @click="cartMenuOpen = false"
+                        to="/cotizacion"
+                        @click="quoteMenuOpen = false"
                       >
-                        Ver carrito
+                        <v-icon icon="fa-solid fa-file-invoice" class="mr-2"></v-icon>
+                        Ver cotización completa
                       </v-btn>
 
                       <v-btn
-                        color="success"
+                        color="error"
                         variant="flat"
                         block
-                        to="/checkout"
-                        @click="cartMenuOpen = false"
+                        @click="clearQuote"
                       >
-                        Finalizar compra
+                        <v-icon icon="fa-solid fa-trash" class="mr-2"></v-icon>
+                        Vaciar cotización
                       </v-btn>
                     </div>
                   </div>
                 </div>
 
-                <div v-else class="empty-cart text-center py-6 px-4">
-                  <v-icon icon="fa-solid fa-shopping-cart" size="48" color="grey-lighten-2" class="mb-3"></v-icon>
-                  <p class="text-body-1 mb-4">Tu carrito está vacío</p>
+                <div v-else class="empty-quote text-center py-6 px-4">
+                  <v-icon icon="fa-solid fa-file-circle-xmark" size="48" color="grey-lighten-2" class="mb-3"></v-icon>
+                  <p class="text-body-1 mb-4">Tu cotización está vacía</p>
                   <v-btn
                     color="primary"
                     variant="flat"
                     to="/productos"
-                    @click="cartMenuOpen = false"
+                    @click="quoteMenuOpen = false"
                   >
                     Explorar productos
                   </v-btn>
@@ -438,7 +434,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { useCartStore } from '@/stores/cartStore';
+import { useQuoteStore } from '@/stores/quoteStore';
 
 // Variables para el menú móvil
 const mobileDrawer = ref(false);
@@ -469,18 +465,17 @@ const mainCategories = [
   }
 ];
 
-// Cart functionality
-const cartStore = useCartStore();
-const cartMenuOpen = ref(false);
+// Quote functionality
+const quoteStore = useQuoteStore();
+const quoteMenuOpen = ref(false);
 
-// Use cart store properties
-const cartItems = computed(() => cartStore.cartItems);
-const cartItemCount = computed(() => cartStore.cartItemCount);
-const cartSubtotal = computed(() => cartStore.cartSubtotal);
+// Use quote store properties
+const quoteItems = computed(() => quoteStore.quoteItems);
+const quoteItemCount = computed(() => quoteStore.quoteItemCount);
 
-// Use cart store methods
-const formatPrice = cartStore.formatPrice;
-const removeFromCart = cartStore.removeFromCart;
+// Use quote store methods
+const removeFromQuote = quoteStore.removeFromQuote;
+const clearQuote = quoteStore.clearQuote;
 </script>
 
 <style scoped>
@@ -517,7 +512,7 @@ const removeFromCart = cartStore.removeFromCart;
 }
 
 .account-btn, 
-.cart-btn {
+.quote-btn {
   height: auto !important;
 }
 
@@ -547,25 +542,25 @@ const removeFromCart = cartStore.removeFromCart;
   width: 100%;
 }
 
-.cart-dropdown {
+.quote-dropdown {
   border-radius: 8px;
   overflow: hidden;
 }
 
-.cart-items-list {
+.quote-items-list {
   max-height: 300px;
   overflow-y: auto;
 }
 
-.cart-item {
+.quote-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.cart-item:last-child {
+.quote-item:last-child {
   border-bottom: none;
 }
 
-.empty-cart {
+.empty-quote {
   min-height: 200px;
   display: flex;
   flex-direction: column;

@@ -1,10 +1,8 @@
 <template>
   <v-card
-    :to="product.link"
-    :class="['product-card', viewMode === 'list' ? 'product-card-list' : '']"
     elevation="2"
     rounded="lg"
-    class="bg-white"
+    class="product-card bg-white"
   >
     <div :class="['d-flex', viewMode === 'list' ? 'flex-row' : 'flex-column']">
       <!-- Imagen del producto -->
@@ -14,6 +12,7 @@
           :height="viewMode === 'list' ? '180' : '220'"
           cover
           class="product-image"
+          @click="navigateToDetail"
         >
           <div class="product-badge" v-if="product.badge">
             <span :class="`badge-${product.badgeType}`">{{ product.badge }}</span>
@@ -24,7 +23,7 @@
       <!-- Información del producto -->
       <v-card-text :class="['pa-4', viewMode === 'list' ? 'flex-grow-1' : '']">
         <div v-if="viewMode === 'list'" class="d-flex flex-column h-100">
-          <div>
+          <div @click="navigateToDetail">
             <div class="d-flex align-center mb-1">
               <span class="text-caption text-medium-emphasis">{{ product.category }}</span>
               <v-spacer></v-spacer>
@@ -40,7 +39,7 @@
           
           <div class="mt-auto">
             <!-- Reemplazar el componente v-rating con nuestra implementación manual de estrellas -->
-            <div class="d-flex align-center mb-2">
+            <div class="d-flex align-center mb-2" @click="navigateToDetail">
               <div class="product-rating">
                 <div class="star-rating">
                   <span v-for="n in 5" :key="n" class="star-icon">
@@ -55,12 +54,11 @@
               <span class="text-caption review-count ml-2">({{ product.reviewCount }})</span>
             </div>
             
-            <div class="d-flex align-center justify-space-between">
-              <div class="d-flex align-center">
-                <div v-if="product.originalPrice" class="text-decoration-line-through text-caption text-medium-emphasis mr-2">
-                  ${{ formatPrice(product.originalPrice) }}
-                </div>
-                <div class="text-h6 font-weight-bold primary-text">${{ formatPrice(product.price) }}</div>
+            <div class="d-flex align-center justify-space-between" @click="navigateToDetail">
+              <!-- Información para cotización en lugar de precio -->
+              <div class="cotizar-text">
+                <v-icon icon="fa-solid fa-file-invoice" size="small" class="mr-1"></v-icon>
+                Solicitar cotización
               </div>
               
               <v-chip
@@ -80,33 +78,79 @@
                 Agotado
               </v-chip>
             </div>
+            
+            <!-- Botón de agregar a cotización -->
+            <v-btn
+              color="primary"
+              variant="flat"
+              block
+              class="mt-3"
+              @click.stop="addToQuote"
+              :disabled="!product.inStock"
+            >
+              <v-icon icon="fa-solid fa-plus" class="mr-2"></v-icon>
+              Agregar a cotización
+            </v-btn>
           </div>
         </div>
         
         <div v-else>
-          <h3 class="text-subtitle-1 font-weight-bold mb-2 product-title text-dark">{{ product.name }}</h3>
-          
-          <div class="d-flex align-center mb-2">
-            <div class="product-rating">
-              <div class="star-rating">
-                <span v-for="n in 5" :key="n" class="star-icon">
-                  <v-icon
-                    :icon="n <= Math.round(validateRating(product.rating)) ? 'fa-solid fa-star' : 'fa-regular fa-star'"
-                    :color="n <= Math.round(validateRating(product.rating)) ? 'amber-darken-2' : 'grey-lighten-1'"
-                    size="small"
-                  />
-                </span>
+          <div @click="navigateToDetail">
+            <h3 class="text-subtitle-1 font-weight-bold mb-2 product-title text-dark">{{ product.name }}</h3>
+            
+            <div class="d-flex align-center mb-2">
+              <div class="product-rating">
+                <div class="star-rating">
+                  <span v-for="n in 5" :key="n" class="star-icon">
+                    <v-icon
+                      :icon="n <= Math.round(validateRating(product.rating)) ? 'fa-solid fa-star' : 'fa-regular fa-star'"
+                      :color="n <= Math.round(validateRating(product.rating)) ? 'amber-darken-2' : 'grey-lighten-1'"
+                      size="small"
+                    />
+                  </span>
+                </div>
               </div>
+              <span class="text-caption review-count ml-2">({{ product.reviewCount }})</span>
             </div>
-            <span class="text-caption review-count ml-2">({{ product.reviewCount }})</span>
+            
+            <!-- Texto de cotización en vista de cuadrícula -->
+            <div class="cotizar-text mb-2">
+              <v-icon icon="fa-solid fa-file-invoice" size="small" class="mr-1"></v-icon>
+              Solicitar cotización
+            </div>
+            
+            <div class="d-flex justify-end">
+              <v-chip
+                v-if="product.inStock"
+                color="success"
+                size="small"
+                class="text-caption"
+              >
+                En stock
+              </v-chip>
+              <v-chip
+                v-else
+                color="error"
+                size="small"
+                class="text-caption"
+              >
+                Agotado
+              </v-chip>
+            </div>
           </div>
           
-          <div class="d-flex align-center">
-            <div v-if="product.originalPrice" class="text-decoration-line-through text-caption text-medium-emphasis mr-2">
-              ${{ formatPrice(product.originalPrice) }}
-            </div>
-            <div class="text-h6 font-weight-bold primary-text">${{ formatPrice(product.price) }}</div>
-          </div>
+          <!-- Botón de agregar a cotización -->
+          <v-btn
+            color="primary"
+            variant="flat"
+            block
+            class="mt-3"
+            @click.stop="addToQuote"
+            :disabled="!product.inStock"
+          >
+            <v-icon icon="fa-solid fa-plus" class="mr-2"></v-icon>
+            Agregar a cotización
+          </v-btn>
         </div>
       </v-card-text>
     </div>
@@ -114,7 +158,12 @@
 </template>
 
 <script setup>
-defineProps({
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const emit = defineEmits(['add-to-quote']);
+
+const props = defineProps({
   product: {
     type: Object,
     required: true
@@ -125,15 +174,20 @@ defineProps({
   }
 });
 
-// Función para formatear el precio
-const formatPrice = (price) => {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
-
 // Asegurarse de que el rating sea un número válido
 const validateRating = (rating) => {
   const numRating = Number(rating);
   return isNaN(numRating) ? 0 : Math.min(Math.max(numRating, 0), 5);
+}
+
+// Método para agregar el producto a la cotización
+const addToQuote = () => {
+  emit('add-to-quote', props.product);
+}
+
+// Método para navegar al detalle del producto
+const navigateToDetail = () => {
+  router.push(props.product.link);
 }
 </script>
 
@@ -144,6 +198,7 @@ const validateRating = (rating) => {
   height: 100%;
   background-color: white !important;
   color: rgba(0, 0, 0, 0.87);
+  cursor: default;
 }
 
 .product-card:hover {
@@ -153,6 +208,7 @@ const validateRating = (rating) => {
 
 .product-image {
   transition: transform 0.5s ease;
+  cursor: pointer;
 }
 
 .product-card:hover .product-image {
@@ -166,7 +222,7 @@ const validateRating = (rating) => {
   z-index: 1;
 }
 
-.badge-discount, .badge-new, .badge-hot {
+.badge-discount, .badge-new, .badge-hot, .badge-featured {
   display: inline-block;
   padding: 4px 8px;
   border-radius: 4px;
@@ -175,8 +231,8 @@ const validateRating = (rating) => {
   font-size: 0.8rem;
 }
 
-.badge-discount {
-  background-color: #FF5722;
+.badge-featured {
+  background-color: #1867C0;
 }
 
 .badge-new {
@@ -193,14 +249,19 @@ const validateRating = (rating) => {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  cursor: pointer;
 }
 
 .text-dark {
   color: rgba(0, 0, 0, 0.87) !important;
 }
 
-.primary-text {
-  color: #1867C0 !important;
+.cotizar-text {
+  color: #1867C0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
 }
 
 .position-relative {
@@ -241,6 +302,7 @@ const validateRating = (rating) => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {
